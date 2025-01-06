@@ -1,0 +1,130 @@
+{% extends "jobs/base.html" %}
+
+{% block title %} Blog {% endblock %}
+{% block content %}
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+<header class="hero-section" style="width:100%;">
+  <div class="container">
+    <div class="row align-items-center py-4 g-5">
+      <div class="col-12 col-md-6">
+        <div class="text-center text-md-start">
+          <h3 class="display-8 fw-bold text-dark pb-1">
+            <span style="color:#0097B2;">Welcome to </span>VIPJOBSEEKERSWORLD
+          </h3>
+          <p class="lead">
+            Hello! I am Senthil Pandi, a B.E. Computer Science Engineering graduate from 2023. After finishing my degree, I completed a Python Full Stack Development course. However, I found it difficult to get a job. I applied to many jobs every day, but I didn’t even get one interview call. I realized that the job market is very competitive.
+          </p>
+          <p class="lead">
+            This experience inspired me to create VIP Job Seekers World. This is not a big job portal, but a community platform where people can share job opportunities. If you attend an interview or come across a job opening, you can post the full details here. This way, others can benefit from the information and connect with potential opportunities.
+          </p>
+          <a href="{% url 'jobs:index' %}">
+            <button class="btn btn-primary px-4 py-2 mt-3 fw-medium">
+              Latest Jobs
+            </button>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 text-center">
+        <img src="/media/items_images/my.jpeg" 
+             class="img-fluid rounded mx-auto d-block" 
+             alt="jobs" 
+             style="max-width: 80%; height: auto;" />
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container mt-5">
+  <div class="row align-items-center gx-5 gy-5 py-5">
+    <div class="col-12 col-lg-6">
+      <img src="/media/items_images/jobs.jpg" 
+           class="img-fluid mx-auto d-block rounded-3" 
+           alt="job search" />
+    </div>
+
+    <div class="col-12 col-lg-6 text-center text-lg-start">
+      <h2 class="fw-bold fs-2 pb-3" style="color:#0097B2;">Why I Created VIP JOBSEEKERSWORLD</h2>
+      <p class="text-justify fs-5">
+        VIP Job Seekers World is not just about finding jobs—it’s about helping each other. 
+        If you find a job opening or attend an interview, you can share it here. 
+        This way, others can benefit from your experience.
+      </p>
+
+      <h3 class="mt-4">Encouraging Collaboration and Experience Sharing</h3>
+      <p class="text-justify fs-5">
+        This platform is a small step to make the job search easier for everyone. 
+        It’s not just a job board—it’s a community of job seekers supporting each other.
+      </p>
+      <p class="text-justify fs-5">
+        I invite everyone to share their interview experiences on this platform. 
+        If you have attended interviews, please provide the company name, contact email, and location. 
+        This information will help others better prepare and make well-informed decisions.
+      </p>
+
+      <a href="{% url 'item:new' %}">
+        <button class="btn btn-primary px-4 py-2 mt-3 fw-medium">
+          Create Jobs
+        </button>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="features-section py-5">
+  <div class="container">
+    <h2 class="fs-3 fw-bold text-center pt-5 pb-5" style="color:#0097B2;">
+      How to Use VIP Job Seekers World
+    </h2>
+
+    <div class="row g-4 pb-4">
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card px-3 py-4 shadow-sm h-100 text-center">
+          <ion-icon class="ionicons" name="bulb-outline"></ion-icon>
+          <h3 class="f5">Sign Up and Log In</h3>
+          <p class="card-text lead">
+            First, create an account by signing up on the website. After logging in, you will see options like Create Jobs, Latest Jobs, Inbox, and Dashboard.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card px-3 py-4 shadow-sm blue-bg h-100 text-center">
+          <ion-icon class="ionicons" name="shield-checkmark-outline"></ion-icon>
+          <h3 class="f5">Post a Job Opportunity</h3>
+          <p class="card-text lead">
+            If you know about a job, you can post it using the Create Jobs option. You can edit or delete the jobs you post at any time.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card px-3 py-4 shadow-sm h-100 text-center">
+          <ion-icon class="ionicons" name="hourglass-outline"></ion-icon>
+          <h3 class="f5">Explore Job Listings</h3>
+          <p class="card-text lead">
+            Browse jobs posted by others on the Latest Jobs page. If you are interested in a job, you can contact the person who posted it.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4 offset-lg-4">
+        <div class="card px-3 py-4 shadow-sm blue-bg h-100 text-center">
+          <ion-icon class="ionicons" name="chatbubble-outline"></ion-icon>
+          <h3 class="f5">Inbox for Communication</h3>
+          <p class="card-text lead">
+            If the person replies, their message will appear in your Inbox. You can chat directly through the platform. Log out when you're done to keep your account safe.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+{% endblock %}

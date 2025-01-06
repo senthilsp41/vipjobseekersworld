@@ -1,0 +1,41 @@
+{% extends 'jobs/base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="text-center" style="color:#0097B2">Job Openings Feedback Form</h2>
+        <p class="text-center">Hi guys, in case you saw any job opening, kindly fill up this form. It will be helpful for most people.</p>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="post" action="." enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="space-y-4">
+                                {{ form.candidate_name }}
+                                {{ form.as_p }}
+                            </div>
+                            {% if form.errors or form.non_field_errors %}
+                                <div class="mb-3 p-4 bg-danger text-white rounded">
+                                    {% for field in form %}
+                                        {{ field.errors }}
+                                    {% endfor %}
+                                    {{ form.non_field_errors }}
+                                </div>
+                            {% endif %}
+
+                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+{% endblock %}

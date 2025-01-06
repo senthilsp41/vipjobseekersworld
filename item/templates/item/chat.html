@@ -1,0 +1,173 @@
+{% extends 'jobs/base.html' %}
+
+{% block title %} Chat {% endblock %}
+
+{% block content %}
+<br>
+<br>
+<h1 class="h1 mb-4 fw-bold text-center" style="color:#0097B2">Group Chats</h1>
+<h4 style="text-align: center; color: #0097B2; margin-bottom: 20px;">
+    Have any questions? Chat with everyone to stay updated on job opportunities and get the help you need.
+</h4>
+
+<div class="container" style="width: 80%; margin: auto; padding-top: 20px;">
+    <!-- Message Form -->
+    <form method="post" action="{% url 'item:chat' %}" style="display: flex; align-items: center;">
+        {% csrf_token %}
+        
+        <!-- Styled Textarea -->
+        <textarea name="message" placeholder="Type your message here..." required
+            style="
+                width: 80%;
+                height: 60px;
+                padding: 10px;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+                font-size: 14px;
+                resize: none;
+                box-sizing: border-box;
+                margin-right: 10px;
+                font-family: Arial, sans-serif;
+                outline: none;
+                transition: border-color 0.3s;
+            "></textarea>
+        
+        <!-- Send Button -->
+        <button type="submit" class="btn btn-primary">Send Message</button>
+    </form>
+</div>
+<br>
+
+{% if page_obj %}
+    <div class="alert alert-success" role="alert">
+        {% for message in page_obj %}
+            <div class="p-4 mb-3 bg-white rounded" style="display: flex; align-items: center;">
+                <!-- User Profile Picture -->
+                {% if message.sender.profile.profile_picture %}
+                    <img src="{{ message.sender.profile.profile_picture.url }}" alt="Profile Picture" 
+                         style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+                {% else %}
+                    <img src='/media/items_images/profile.png' alt="Default Avatar"
+                         style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+                {% endif %}
+
+                <!-- Message Content -->
+                <div>
+                    <p class="mb-1 fw-bold {% if message.sender == request.user %}text-danger{% else %}text-success{% endif %}">
+                        {{ message.sender.username }}
+                    </p>
+                    <p class="text-muted small">{{ message.timestamp|date:"F d, Y h:i A" }}</p>
+                    <p>{{ message.message }}</p>
+                </div>
+
+                <!-- Remove Button (Visible only for the message sender) -->
+                {% if message.sender == request.user %}
+                <form method="post" action="{% url 'item:delete_message' message.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger" style="margin-left: 10px;">Remove</button>
+                </form>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Read More Button (only if there are more pages) -->
+    {% if page_obj.has_next %}
+        <div class="text-center">
+            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-secondary">Read More</a>
+        </div>
+    {% endif %}
+{% endif %}
+<br>
+
+{% endblock %}
+
+
+
+{% comment %} 
+
+
+ {% extends 'jobs/base.html' %}
+
+{% block title %} Chat {% endblock %}
+
+{% block content %}
+<br>
+<br>
+<h1 class="h1 mb-4 fw-bold text-center" style="color:#0097B2">Group Chats</h1>
+<h4 style="text-align: center; color: #0097B2; margin-bottom: 20px;">
+    Have any questions? Chat with everyone to stay updated on job opportunities and get the help you need.
+</h4>
+
+<div class="container" style="width: 80%; margin: auto; padding-top: 20px;">
+    <!-- Message Form -->
+    <form method="post" action="{% url 'item:chat' %}" style="display: flex; align-items: center;">
+        {% csrf_token %}
+        
+        <!-- Styled Textarea -->
+        <textarea name="message" placeholder="Type your message here..." required
+            style="
+                width: 80%;
+                height: 60px;
+                padding: 10px;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+                font-size: 14px;
+                resize: none;
+                box-sizing: border-box;
+                margin-right: 10px;
+                font-family: Arial, sans-serif;
+                outline: none;
+                transition: border-color 0.3s;
+            "></textarea>
+        
+        <!-- Send Button -->
+        <button type="submit" class="btn btn-primary"
+            >
+            Send Message
+        </button>
+    </form>
+</div>
+<br>
+
+{% if messages %}
+    <div class="alert alert-success" role="alert">
+        {% for message in messages %}
+            <div class="p-4 mb-3 bg-white rounded" style="display: flex; align-items: center;">
+                <!-- User Profile Picture -->
+                {% if message.sender.profile.profile_picture %}
+                    <img src="{{ message.sender.profile.profile_picture.url }}" alt="Profile Picture" 
+                         style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+                {% else %}
+                    <img src='/media/items_images/profile.png' alt="Default Avatar"
+                         style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+                {% endif %}
+
+                <!-- Message Content -->
+                <div>
+                    <p class="mb-1 fw-bold {% if message.sender == request.user %}text-danger{% else %}text-success{% endif %}">
+                        {{ message.sender.username }}
+                    </p>
+                    <p class="text-muted small">{{ message.timestamp|date:"F d, Y h:i A" }}</p>
+                    <p>{{ message.message }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+<br>
+
+
+    <!-- Remove Button -->
+   <!-- Remove Button (Visible only for the message sender) -->
+   {% if message.sender == request.user %}
+   <form method="post" action="{% url 'item:delete_message' message.id %}">
+       {% csrf_token %}
+       <button type="submit" class="btn btn-sm btn-danger" style="margin-left: 10px;">Remove</button>
+   </form>
+   {% endif %}
+
+</div>
+{%endblock%}
+
+  {% endcomment %}

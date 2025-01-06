@@ -1,0 +1,68 @@
+{% extends 'jobs/base.html' %}
+
+{% block title %} New Conversation {% endblock %}
+
+{% block content %}
+<h1 class="mb-6 text-3xl"></h1>
+<div class="container mt-5">
+    <h2 class="text-center">New Conversation</h2>
+    <p class="text-center">Hi guys, in case you saw any job opening, kindly fill up this form. It will be helpful for most people.</p>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    {% if messages %}
+                        <div class="alert alert-success" role="alert">
+                            {% for message in messages %}
+                                {{ message }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <form method="post" action="." onsubmit="showCustomPopup(event)">
+                        {% csrf_token %}
+                        <div class="space-y-4">
+                            {{ form.as_p }}
+                        </div>
+                        {% if form.errors or form.non_field_errors %}
+                            <div class="mb-3 p-4 bg-danger text-white rounded">
+                                {% for field in form %}
+                                    {{ field.errors }}
+                                {% endfor %}
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+                        <button type="submit" class="btn btn-primary btn-block">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<!-- Custom Popup Message -->
+<div id="customPopup" style="display: none; position: fixed; top: 30%; left: 50%; transform: translate(-50%, -30%); 
+            background-color: #333; color: white; padding: 20px; border-radius: 8px; z-index: 1000; text-align: center; width: 80%; max-width: 400px;">
+    <p>Hi {{ user.username }}, your message has been sent successfully. Kindly wait for a reply message and check your inbox frequently.</p>
+    <button onclick="closePopup()" style="margin-top: 10px; padding: 5px 10px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">Close</button>
+</div>
+
+{% endblock %}
+
+<script>
+    function showCustomPopup(event) {
+        event.preventDefault();  // Prevent form from submitting immediately
+        document.getElementById('customPopup').style.display = 'block'; // Show the custom popup
+
+        // Hide the popup after a delay and then submit the form
+        setTimeout(() => {
+            document.getElementById('customPopup').style.display = 'none';  // Hide popup
+            event.target.submit();  // Manually submit the form after hiding popup
+        }, 2000);  // Adjust delay as needed
+    }
+
+    function closePopup() {
+        document.getElementById('customPopup').style.display = 'none';
+    }
+</script>

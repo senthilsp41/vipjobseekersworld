@@ -1,0 +1,23 @@
+{% extends "jobs/base.html" %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card shadow-sm p-4" style="width: 100%; max-width: 500px;">
+        <h2 class="text-center mb-4">Validate OTP</h2>
+        <p class="text-center">Enter the OTP sent to your email address.</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" name="email" id="email" class="form-control" required>
+            </div>
+            <div class="form-group mt-3">
+                <label for="otp">OTP</label>
+                <input type="text" name="otp" id="otp" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-3">Validate OTP</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

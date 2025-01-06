@@ -1,0 +1,153 @@
+{% extends 'jobs/base.html' %}
+
+{% block title %} {{ item.name }} {% endblock %}
+
+{% block content %}
+{% if messages %}
+    <div class="mb-3">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+{% endif %}
+<br>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card shadow-lg " style="border-color:#0097B2">
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        {% if item.image %}
+                            <img src="{{ item.image.url }}" alt="{{ item.company_name }}" class="img-fluid rounded-circle animated fadeIn" style="width: 20%; height: 20%;">
+                        {% else %}
+                            <img src='/media/items_images/jobs.jpg' alt="Default Profile Image" class="img-fluid rounded-circle animated fadeIn" style="width: 20%; height: 20%;">
+                        {% endif %}
+                        <h3 class="card-title mt-2 ">Company Name:<span style="color:#0097B2">{{ item.company_name }}</span></h3>
+                        <h4 class="card-title mt-2 ">Uploaded By:<span style="color:#0097B2">{{ item.uploaded_by }}</span></h4>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 style="color:#2B468B">Job Details</h5>
+                            <div class="card mb-3 shadow-sm">
+                                <div class="card-body">
+                                    <p style="color:#2B468B"><strong>Role:</strong> {{ item.job_title }}</p>
+                                    <p style="color:#2B468B"><strong>Job Find:</strong> {{ item.job_type }}</p>
+                                    <p style="color:#2B468B"><strong>Salary:</strong> {{ item.salary }}</p>
+                                    <p style="color:#2B468B"><strong>Interview Date:</strong> {{ item.interview_date }}</p>
+                                    <p style="color:#2B468B"><strong>Interview Mode:</strong> {{ item.interview_type }}</p>
+                                    <p style="color:#2B468B"><strong>Location:</strong> {{ item.job_location }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 style="color:#2B468B">Company Details</h5>
+                            <div class="card mb-3 shadow-sm">
+                                <div class="card-body">
+                                    <p style="color:#2B468B"><strong>Email:</strong> <a href="mailto:{{ item.company_email }}">{{ item.company_email }}</a></p>
+                                    <p style="color:#2B468B"><strong>Website:</strong> <a href="{{ item.company_website }}" target="_blank">{{ item.company_website }}</a></p>
+                                    <p style="color:#2B468B"><strong>Apply Link:</strong> <a href="{{ item.companyfind_website }}" target="_blank">{{ item.companyfind_website }}</a></p>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <h5 style="color:#2B468B">Job Description</h5>
+                        <div class="card mb-3 shadow-sm">
+                            <div class="card-body">
+                                <p>{{ item.company_description }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <h5 style="color:#2B468B">Interview Experience</h5>
+                        <div class="card mb-3 shadow-sm">
+                            <div class="card-body">
+                                <p>{{ item.interview_feedback }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <h5 style="color:#2B468B">Additional Information</h5>
+                        <div class="card mb-3 shadow-sm">
+                            <div class="card-body">
+                                <p style="color:#2B468B"><strong>Skills:</strong> {{ item.skills}}</p>
+                                <p style="color:#2B468B"><strong>Experience Required:</strong> {{ item.experience_required }}</p>
+                                {% comment %} <p style="color:#2B468B"><strong>Interview Type:</strong> {{ item.interview_type }}</p> {% endcomment %}
+                                <p style="color:#2B468B"><strong>Created by:</strong> {{ item.created_by }} <b> Email:</b> {{ item.candidate_email }}</p>
+                                <p style="color:#2B468B"><strong>Created at:</strong> {{ item.create_at }}</p>
+           
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if request.user.is_authenticated and request.user == item.created_by %}
+                    <div class='mt-5 p-5 bg-white rounded-3'>
+                        <h3>This is Your Job update</h3>
+                        <a href='{% url 'item:edit' item.id %}' class="btn btn-danger btn-block">Edit</a>
+                        <a href='{% url 'item:delete' item.id %}' class="btn btn-danger btn-block">Delete</a>
+                    </div>
+                    {% else %}
+                    <a href="{% url 'conversation:new' item.id %}"><button type="submit" class="btn btn-primary btn-block">Contact Person</button></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom CSS for Animation -->
+<style>
+    .animated {
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .fadeIn {
+        opacity: 1;
+    }
+
+    .card {
+        transition: transform 0.3s;
+        border-color:#0097B2;
+    }
+
+    .card:hover {
+
+        transform: scale(1.01);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+       
+        
+
+    }
+</style>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">Related Jobs</h2>
+    <div class="row">
+        {% for related_item in related_items %}
+        <div class="col-md-4">
+            <div class="card d-flex justify-content-center align-items-center">
+                <a href='{% url "item:detail" related_item.id %}'>
+                    {% if related_item.image %}
+                        <img src="{{ related_item.image.url }}" class="card-img-top" alt="{{ related_item.job_title }}" style="height: 100px; object-fit: cover; width: 100px;">
+                    {% else %}
+                        <img src="/media/items_images/jobs.jpg" class="card-img-top" alt="Default Image" style="height: 100px; object-fit: cover; width: 100px;">
+                    {% endif %}
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">{{ related_item.job_title }}</h5>
+                    <p class="card-text">{{ related_item.company_name }}</p>
+                    <p class="card-text">{{ related_item.job_location }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

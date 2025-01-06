@@ -1,0 +1,17 @@
+{% extends "jobs/base.html" %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card shadow-sm p-4" style="width: 100%; max-width: 500px;">
+        <h2 class="text-center mb-4">Forgot Password</h2>
+        <p class="text-center">Enter your email to receive an OTP for password reset.</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Send OTP</button>
+        </form>
+        
+    </div>
+</div>
+{% endblock %}

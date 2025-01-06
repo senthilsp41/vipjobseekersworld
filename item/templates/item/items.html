@@ -1,0 +1,60 @@
+{% extends "jobs/base.html" %}
+
+{% block content %}
+{% if messages %}
+        <div class="alert alert-success" id="loginSuccessAlert" role="alert">
+            {% for message in messages %}
+                {{ message }}<br>
+            {% endfor %}
+            <button type="button" class="close" aria-label="Close" onclick="this.parentElement.style.display='none';">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
+<div class="container my-5">
+    <h2 class="text-center mb-4">Job Listings</h2>
+
+    <form method="GET" action="{% url 'item:items' %}" class="mb-4 d-flex justify-content-center">
+        <div class="input-group" style="width: 50%;">
+            {% comment %} <input type="text" name="query" value="{{ query }}" 
+                   class="form-control" placeholder="Search for jobs..." aria-label="Search for jobs"> {% endcomment %}
+                   
+            <select name="category" class="form-control" onchange="this.form.submit();" aria-label="Select category">
+                <option value="0">All Categories</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if category.id == category_id %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+    
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        {% for item in items %}
+        <div class="col-md-4">
+            <div class="card mb-4" >
+                <a href='{% url "item:detail" item.id %}' >
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.job_title }}" style="height: 10%; object-fit: cover; width: 10%;">
+                    {% else %}
+                        <img src='/media/items_images/jobs.jpg' class="card-img-top" alt="Default Image" style="height: 10%; object-fit: cover; width: 10%;">
+                    {% endif %}
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.job_title }}</h5>
+                    <p class="card-text">{{ item.company_name }}</p>
+                    <p class="card-text">{{ item.job_location }}</p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+            <p class="text-center">No items found for the selected category or search query.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

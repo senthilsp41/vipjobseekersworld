@@ -1,0 +1,78 @@
+{% extends "jobs/base.html" %}
+
+{%block title%} Dashboard{%endblock%}
+
+
+
+{% block content %}
+{% comment %} <div class="container my-5">
+    <h2 class="text-center mb-4">Latest Jobs</h2>
+    <div class="row">
+        {% for item in items %}
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{{ item.image.url}}" class="card-img-top" alt="{{ item.job_title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.job_title }}</h5>
+                    <p class="card-text">{{ item.company_description}}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div> {% endcomment %}
+
+<div class="container mt-5 text-center">
+    <h1>Welcome, {{ user.username }}!</h1>
+    {% if user.profile.profile_picture %}
+        <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture" 
+             style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">
+    {% else %}
+        <img src='/media/items_images/profile.png' alt="Default Avatar" 
+             style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">
+    {% endif %}
+    <p>Your Email: {{ user.email }}</p>
+
+    <div class="mt-4">
+        <a href="{% url 'jobs:logout' %}" class="btn btn-danger">Logout</a>
+    </div>
+</div>
+<hr>
+
+
+
+<div class="container my-5">
+    <h2 class="text-center mb-4" style="color:#0097B2"> Your Jobs</h2>
+    <div class="row">
+        {% for item in items %}
+        
+        <div class="col-md-4">
+            <div class="card">
+                <a href='{% url "item:detail" item.id %}'>
+                {% comment %} <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.job_title }}" style="height: 200px; object-fit: cover width:200px;"> {% endcomment %}
+                {% if item.image %}
+                            <img src="{{ item.image.url }}" class="img-fluid rounded-circle animated fadeIn" style="width: 50px; height: 50px;">
+                        {% else %}
+                            <img src='/media/items_images/jobs.jpg' alt="{{ item.job_title }}" class="img-fluid rounded-circle animated fadeIn" style="width: 50px; height: 50px;">
+                        {% endif %}
+                </a>
+                
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.job_title }}</h5>
+                    <p class="card-text">{{ item.company_name }}</p>
+                    <p class="card-text">{{ item.job_location }}</p>
+                    <p><strong>Created_by:</strong> {{ item.created_by }}</p>
+                        <p><strong>Created_at:</strong> {{ item.create_at }}</p>
+                </div>
+            </div>
+        </div>
+        <br>
+    
+        {% endfor %}
+        <br>
+    </div>
+    <br>
+</div>
+<br>
+
+{%endblock%}

@@ -1,0 +1,65 @@
+{% extends 'jobs/base.html' %}
+
+{% block title %} Inbox {% endblock %}
+
+{% block content %}
+<br>
+
+<h1 class="h1 mb-4 fw-bold text-center" style="color:#0097B2">Inbox</h1>
+<br>
+<div class="list-group" style="width: 90%; max-width: 600px; margin: auto;">
+    {% for conversation in conversations %}
+    <a href="{% url 'conversation:detail' conversation.id %}" class="list-group-item list-group-item-action d-flex align-items-start flex-wrap rounded">
+        
+        <!-- Item Image -->
+        <div class="me-3 mb-3" style="flex: 0 0 80px;">
+            {% if conversation.item.image %}
+                <img src="{{ conversation.item.image.url }}" class="rounded img-fluid" style="width: 100%; height: auto;">
+            {% else %}
+                <img src="/media/items_images/jobs.jpg" class="rounded img-fluid" style="width: 100%; height: auto;">
+            {% endif %}
+        </div>
+
+        <!-- Conversation Details -->
+        <div class="flex-grow-1" style="min-width: 200px;">
+            <h5 class="mb-1">{{ conversation.item.company_name }}</h5>
+            <p class="mb-1">{{ conversation.item.job_title }}</p>
+        </div>
+        
+        <!-- Member Details and Actions -->
+        <div class="d-flex flex-column align-items-start mt-3 mt-md-0">
+            {% for member in conversation.members.all %}
+                {% if member != request.user %}
+                <div class="d-flex align-items-center mb-3">
+                    
+                    <!-- Profile Picture -->
+                    {% if member.profile.profile_picture %}
+                        <img src="{{ member.profile.profile_picture.url }}" alt="Profile Picture" 
+                             class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                    {% else %}
+                        <img src='/media/items_images/profile.png' alt="Default Avatar"
+                             class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                    {% endif %}
+                    
+                    <!-- Username and Last Modified -->
+                    <div>
+                        <p class="fw-bold mb-0" style="color:#0097B2">Username: {{ member.username }}</p>
+                        <p class="text-muted small mb-0">{{ conversation.modified_at|date:"F d, Y h:i A" }}</p>
+                    </div>
+                </div>
+
+                <!-- Delete Button -->
+                <form action="{% url 'conversation:delete' conversation.id %}" method="POST" class="mb-3">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+    </a>
+    {% endfor %}
+</div>
+
+<br><br><br>
+{% endblock %}

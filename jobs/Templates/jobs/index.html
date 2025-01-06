@@ -1,0 +1,112 @@
+{% extends "jobs/base.html" %}
+{% load static %}
+
+{% block title %} Welcome {% endblock %}
+
+{% block content %}
+{% include 'jobs/slider.html' %}
+{% if messages %}
+    <div class="mb-3">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+
+{% comment %} <pre>{{ messages }}</pre>  <!-- This will show raw messages -->
+<div class="modal-body">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% else %}
+        <p>{{ message }}</p>  <!-- Optional: To show if no messages exist -->
+    {% endif %}
+</div> {% endcomment %}
+
+
+<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="messageModalLabel">Message</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">Latest Jobs</h2>
+    <div class="row g-3"> 
+        {% for item in items %}
+        <div class="col-md-4">
+            <div class="card" style="border-radius: 10px;">
+                <div class="d-flex justify-content-center align-items-center" style="height: 180px;"> 
+                    <a href='{% url "item:detail" item.id %}' class="d-flex justify-content-center">
+                        <div style="width: 80%; height: 200px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                            {% if item.image %}
+                                <img src="{{ item.image.url }}" alt="{{ item.job_title }}" style="width: 50%; height: auto; object-fit: cover;">
+                            {% else %}
+                                <img src='/media/items_images/jobs.jpg' alt="{{ item.job_title }}" style="width: 100%; height: 50%; object-fit: cover;">
+                            {% endif %}
+                        </div>
+                    </a>
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ item.job_title }}</h5>
+                    <p class="card-text">{{ item.company_name }}</p>
+                    <p class="card-text">{{ item.job_location }}</p>
+                    <p><strong>Created_at:</strong> {{ item.create_at }}</p>
+                    <p><strong>Created_by:</strong> {{ item.created_by }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+   
+
+
+<br>
+<div class="container my-5">
+    <h2 class="text-center mb-4">Categories</h2>
+    <div class="row g-3">
+        {% for categories in category %}
+        <div class="col-md-4">
+            <div class="card" style='background-color:#0097B2'>
+                <div class="card-body">
+                    <h5 class="card-title">{{ categories.name }}</h5>
+                    <p class="card-text">{{ categories.items.count }} jobs</p>
+                </div>
+            </div>
+        </div>
+       
+        {% endfor %}
+    </div>
+</div>
+<div class="container text-center">
+    <h5 class="mb-4">Total Users</h5>
+    <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center mx-auto" style="width: 100px; height: 100px; font-size: 24px;">
+        {{ total_users }}
+    </div>
+    <p class="mt-2">Thank you for being part of our community!</p>
+</div>
+
+
+
+
+{% endblock %}

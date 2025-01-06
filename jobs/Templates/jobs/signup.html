@@ -1,0 +1,61 @@
+{% extends 'jobs/base.html' %}
+
+{% block title %} Sign up {% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h4>Sign Up</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <br>
+                            {{ form.username }}
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email address</label>
+                            <br>
+                            {{ form.email }}
+                        </div>
+                        <div class="form-group">
+                            <label for="password1">Password</label>
+                            <br>
+                            {{ form.password1 }}
+                        </div>
+                        <div class="form-group">
+                            <label for="password2">Confirm Password</label>
+                            <br>
+                            {{ form.password2 }}
+                        </div>
+                        <div class="form-group">
+                            <label for="profile_picture">Profile Picture (Optional)</label>
+                            <br>
+                            {{ form.profile_picture }}
+                        </div>
+                        {% if form.errors or form.non_field_errors %}
+                        <div class="mb-3 p-4 bg-danger text-white rounded">
+                            {% for field in form %}
+                                {{ field.errors }}
+                            {% endfor %}
+                            {{ form.non_field_errors }}
+                        </div>
+                        {% endif %}
+                        <br>
+                        <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <small>Already have an account? <a href="{% url 'jobs:login' %}">Login here</a></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "jobs/base.html" %}
+
+{%block title%} Welcome {%endblock%}
+
+
+
+{% block content %}
+{% include 'jobs/slider.html' %}
+{% comment %} <div class="container my-5">
+    <h2 class="text-center mb-4">Latest Jobs</h2>
+    <div class="row">
+        {% for item in items %}
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{{ item.image.url}}" class="card-img-top" alt="{{ item.job_title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.job_title }}</h5>
+                    <p class="card-text">{{ item.company_description}}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div> {% endcomment %}
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">All Jobs</h2>
+    <div class="row g-3"> 
+        {% for item in items %}
+        
+        <div class="col-md-4" >
+            <div class="card" style="border-radius: 10px; ">
+                <div class="d-flex justify-content-center align-items-center" style="height: 180px;"> 
+                   
+                    <a href='{% url "item:detail" item.id %}' class="d-flex justify-content-center">
+                        <div style="width: 80%; height: 200px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                            {% if item.image %}
+                                <img src="{{ item.image.url }}" alt="{{ item.job_title }}" style="width: 50%; height: auto; object-fit: cover;">
+                            {% else %}
+                                <img src='/media/items_images/jobs.jpg' alt="{{ item.job_title }}" style="width: 100%; height: 50%; object-fit: cover;">
+                            {% endif %}
+                        </div>
+                    </a>
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ item.job_title }}</h5>
+                    <p class="card-text">{{ item.company_name }}</p>
+                    <p class="card-text">{{ item.job_location }}</p>
+                    <p><strong>Created_at:</strong> {{ item.create_at }}</p>
+                    <p><strong>Created_by:</strong> {{ item.created_by }}</p>
+                    
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+
+<br>
+
+
+
+
+
+{%endblock%}

@@ -1,0 +1,286 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- SEO Meta Tags -->
+        <meta name="description" content="VIP Job Seekers World - Your go-to platform for job searching, career advice, and interview tips. Discover the latest job opportunities and get guidance on landing your dream job.">
+        <meta name="keywords" content="job search, job portal, career advice, resume tips, interview tips, job opportunities, VIP Job Seekers World">
+        <meta name="robots" content="index, follow">
+    
+        <!-- Open Graph Meta Tags for Social Sharing -->
+        <meta property="og:title" content="VIP Job Seekers World - Find Your Dream Job">
+        <meta property="og:description" content="Explore thousands of job listings, get career guidance, and join a community dedicated to helping each other succeed in job hunting.">
+        <meta property="og:image" content="{% static 'images/og-image.jpg' %}">
+        <meta property="og:url" content="https://vipjobseekersworld.com/">
+        <meta property="og:type" content="website">
+    
+        <!-- Twitter Card Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="VIP Job Seekers World - Find Your Dream Job">
+        <meta name="twitter:description" content="Join VIP Job Seekers World and find thousands of job opportunities. Get tips on resume writing, interview prep, and career success.">
+        <meta name="twitter:image" content="{% static 'images/twitter-card.jpg' %}">
+        <meta name="twitter:site" content="@VIPJobSeekers">
+    
+        <!-- Title Tag -->
+        <title>{% block title %} {% endblock %} | jobportals</title>
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
+    
+        <!-- External CSS Links -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    
+        <!-- Inline CSS and Additional Styles -->
+    <style>
+            .btn-teal {
+                background-color: #20c997; /* Bootstrap's success color as an example */
+                color: white; /* Text color */
+                border: none; /* Remove border */
+            }
+            
+            .btn-teal:hover {
+                background-color: #1e7e34; /* Darker shade for hover effect */
+            }
+            
+            .animated-button {
+                transition: transform 0.3s ease, background-color 0.3s ease;
+            }
+            
+            .animated-button:hover {
+                transform: scale(1.05); /* Slightly enlarges the button */
+                background-color: #006666; /* Darker teal on hover */
+            }
+            
+            /* Custom Styles */
+            .navbar {
+                background: #0097B2;
+                transition: background 0.3s ease;
+            }
+            .navbar:hover {
+                background: #2B468B;
+            }
+            .nav-link {
+                color: white !important;
+                transition: color 0.3s ease;
+            }
+            .nav-link:hover {
+                color: #ffdd57 !important;
+            }
+            .btn-secondary {
+                background-color: #2B468B;
+                border: none;
+                transition: background-color 0.3s ease;
+            }
+            .btn-secondary:hover {
+                background-color:#0097B2;
+            }
+            body {
+                padding-top: 70px; 
+            } 
+        </style>
+    
+    </head>
+    
+
+<body style="background-color:#e8e6ed">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <a class="navbar-brand" href="{%url "jobs:index" %}" style="color: white;">VIPJOBSEEKERSWORLD</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{%url "jobs:index" %}">Latest Jobs <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{%url "jobs:indexs" %}">All Jobs <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'item:items' %}">Search</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url "jobs:blog" %}">About</a>
+                </li>
+            </ul>
+            <div class="btn-group-inline" role="group" aria-label="Basic example" style="margin:10px;">
+                {% if request.user.is_authenticated %}
+               
+                
+                
+                <a href="{% url 'conversation:inbox' %}">
+                    <button type="button" class="btn btn-secondary">Inbox</button>
+                </a>
+                <a href="{% url 'item:new' %}">
+                    <button type="button" class="btn btn-secondary">Create Jobs</button>
+                </a>
+                <a href="{% url 'item:chat' %}">
+                    <button type="button" class="btn btn-secondary">Chats</button>
+                </a>
+               
+                <a href="{% url 'jobs:logout' %}">
+                    <button id="logoutButton" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                        Logout
+                    </button>
+                </a>
+                <a href="{% url 'dashboard:index' %}">
+                    <button type="button" class="btn btn-secondary">Welcome, {{ user.username }}!
+                    
+                    
+                        {% if user.profile.profile_picture %}
+                            <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture" style="width: 30px; height: 30px; border-radius: 50%;">
+                        {% else %}
+                            <img src="/media/items_images/profile.png" alt="Default Avatar" style="width: 30px; height: 30px; border-radius: 50%;">
+                        {% endif %}
+                    </button>
+                    
+                    </a>
+                {% comment %} <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to log out?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <a id="confirmLogout" href="{% url 'jobs:logout' %}" class="btn btn-danger">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div> {% endcomment %}
+                {% comment %} <div class="modal fade" id="logoutModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Confirm Logout</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">Are you sure you want to log out?</div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <a href="{% url 'jobs:logout' %}" class="btn btn-danger">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div> {% endcomment %}
+                {% else %}
+                <a href="{% url 'jobs:signup' %}">
+                    <button type="button" class="btn btn-secondary">Sign up</button>
+                </a>
+                <a href="{% url 'jobs:login' %}">
+                    <button id="loginButton"type="button" class="btn btn-secondary">Log in</button>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+   
+
+
+    <div class="px-6 py-6">
+        {% block content %}
+        {% endblock %}
+    </div>
+ <script>
+    // Logout Button Click Event
+    const logoutButton = document.getElementById('logoutButton');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', function (event) {
+            const confirmLogout = confirm('Are you sure you want to log out?');
+            if (!confirmLogout) {
+                event.preventDefault(); // Prevents the default behavior (redirect) if Cancel is clicked
+            } else {
+                alert('You have been logged out successfully.');
+                window.location.href = "{% url 'jobs:logout' %}";  // Redirect to logout
+            }
+        });
+    }
+</script> 
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <footer class="bg-light text-center text-lg-start">
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 mb-4">
+                    <h5 class="text-uppercase" style="color:#0097B2">About VIP JOBSEEKERSWORLD</h5>
+                    <p>
+                        My name is Senthil Pandi, and I created VIP JOBSEEKERSWORLD after facing numerous struggles in my own job search. This platform is not just a job portal; it's a community where we can support each other in our job-hunting journeys. 
+                        I encourage you to share your experiences. If you attend any interviews, please upload details about the kind of interviews you faced. Together, we can help each other succeed!
+                    </p>
+                </div>
+    
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="text-uppercase" style="color:#0097B2">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{%url "jobs:index" %}" class="text-dark">Home Page</a></li>
+                        <li><a href="{%url "jobs:index" %}" class="text-dark">Latest Jobs</a></li>
+                        <li><a href="{%url "jobs:indexs" %}" class="text-dark">All Jobs</a></li>
+                        <li><a href="{%url "jobs:blog" %}" class="text-dark">About</a></li>
+                        
+                    </ul>
+                </div>
+    
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="text-uppercase" style="color:#0097B2">Contact</h5>
+                    <p>
+                        Email: vipjobseekersworld@gmail.com<br>
+                        
+                    </p>
+                   
+                
+            </div>
+        </div>
+        <div class="container mt-5 text-center">
+            <h3 style="color:#0097B2">Connect with Me</h3>
+            <div class="social-icons">
+                <a href="https://www.instagram.com/senthil__sp/" target="_blank" class="btn btn-outline-secondary mx-2">
+                    <i class="bi bi-instagram"></i> Instagram
+                </a>
+                <a href="https://linkedin.com/in/senthil-pandi-630184191" target="_blank" class="btn btn-outline-secondary mx-2">
+                    <i class="bi bi-linkedin"></i> LinkedIn
+                </a>
+                <a href="https://github.com/senthilsp41" target="_blank" class="btn btn-outline-secondary mx-2">
+                    <i class="bi bi-github"></i> GitHub
+                </a>
+                <a href="https://senthilpandi.netlify.app/" target="_blank" class="btn btn-outline-secondary mx-2">
+                    <i class="bi bi-github"></i> Portfolio
+                </a>
+                <a href="https://chat.whatsapp.com/FAikg9VD6BIGXuwiUQJVgA" target="_blank" class="btn btn-outline-secondary mx-2">
+                    <i class="bi bi-github"></i> WhatsApp
+                </a>
+            </div>
+        </div>
+        
+      
+        <br>
+        <br>
+    
+        <div class="text-center p-3 bg-dark text-white">
+            © 2024 VIPJOBSEEKERSWORLD. All rights reserved. Together, let's shape the future of work!
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+<script src="{% static 'js/navbar.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="{% static 'js/script.js' %}"></script>
+    
+</body>
+</html>

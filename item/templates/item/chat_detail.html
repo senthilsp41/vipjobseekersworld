@@ -1,0 +1,16 @@
+<h2>Chat with {{ chat.participants.all|join:", " }}</h2>
+
+<div>
+    {% for message in messages %}
+        <p><strong>{{ message.sender.username }}</strong>: {{ message.content }} <em>{{ message.timestamp }}</em></p>
+    {% endfor %}
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <a href="{% url 'item:chat_detail' chat.id %}">
+        <button type="button" class="btn btn-secondary">Chat with {{ chat.participants.all|join:", " }}</button>
+    </a>
+    
+</form>
