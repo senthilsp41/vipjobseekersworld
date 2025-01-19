@@ -1,0 +1,21 @@
+Hello Everyone!
+My name is Senthil Pandi, and I’m a Computer Science Engineering graduate from the class of 2023. Today, I’m excited to share my project with you.
+Before diving into the details of the website, I want to explain the motivation behind its creation. After completing my degree, I faced numerous challenges in securing a job. One of the hardest parts was struggling to receive even an interview call. As we all know, the job market is highly competitive, and many online job platforms are saturated with users, making it difficult to stand out and get noticed. This experience inspired me to create a website that addresses these challenges.
+Thus, I created VIP Job Seekers World. This website is not just a job portal; it's a community where individuals can share job updates and connect with recruiters. My aim was to create a platform that can help those struggling to find job opportunities, especially young job seekers.
+Let me take you through the key features of the website:
+1.	Homepage: This is the first page users see. It provides an overview of what our community is all about and highlights the latest job updates.
+2.	Latest Jobs Page: This section requires users to log in. If a user is not logged in, they can only see the latest job postings and the details of each job. They will not have the option to create a job or access their inbox. You can find the 12 most recent job postings listed here. Below the listings, the latest jobs created by users are displayed in cards that show the company name, job role, who created the job, and when it was created. Additionally, you’ll see how many users are currently active on the site.Job Details: When you click on a job card, you can view all the relevant details, such as the job role, salary, and more.
+3.	Create Job Option: Once you log in, you will see options such as 'Welcome,' 'Create Jobs,' 'Dashboard,' 'Inbox,' and 'Logout.' In the 'Create Jobs' section, you’ll find a form to enter all the necessary details, including the category, job role, and interview date. Once you submit this form, the data will appear on the front page's Latest Jobs section. If you refresh the page, you can see the latest job you created.
+4.	Contact Feature: Detail Page: You can view all the details of the job posting. If you created this job, you will have two options: "Edit" and "Delete." If another user created the job, you will see a "Contact Person" option. Once you click on "Contact Person," you will be redirected to the conversation page where you can enter your query. After you click the "Send" button, an email notification will be sent to the person who created the job. Additionally, the user can check their inbox to see your message, allowing for communication between both parties.ensuring that users receive updates when they are contacted.
+5.	Inbox: This feature allows users to manage their conversations. All messages sent to you, along with the date and time, will appear here. If a conversation is no longer needed, users have the option to delete it.
+6.	All Jobs Page: Here, you can view all job postings created by users.
+7.	Search Page: Users can filter jobs by category to find the most relevant postings.
+8.	About Page: This section explains the reasoning behind the creation of the website and its goals.
+9.	Dashboard: Users can view all the jobs they have created.
+10.	Logout: Finally, when you’re done, you can log out, and your session will end securely.
+In conclusion, VIP Job Seekers World is designed to facilitate connections and provide support to those looking for job opportunities. It’s a community built on collaboration and sharing valuable information.
+This isn’t just another job portal; it’s a community designed for us to support one another as we navigate the challenges of job hunting.
+I encourage each of you to share your experiences. If you attend any interviews, please upload details about the types of interviews you faced. Together, we can help each other succeed and make the job search process a little easier for everyone!
+
+I will also share a video on my YouTube channel that will give you a visual overview of the website and its features.
+Thank you for your attention! I’m happy to answer any questions you might have
